@@ -1,11 +1,18 @@
-const http = require('http');
 const loginHandler = require('./login.handler')
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const express = require('express');
+const app = express();
+const cors = require('cors')
+app.use(cors());
 
-const server = http.createServer((req, res) => loginHandler(req, res);
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.post('/login', loginHandler);
+
+var server = app.listen(8081, function () {
+   var host = server.address().address
+   var port = server.address().port
+
+   console.log("Example app listening at http://%s:%s", host, port)
+})

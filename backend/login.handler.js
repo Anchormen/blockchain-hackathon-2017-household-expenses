@@ -1,9 +1,22 @@
 
 
 var processLogin = function (req, res) {
+  if(req.body.username === 'anchormen' && req.body.password === 'anchormen') {
+    loginOk(req, res)
+  }
+  else {
+    loginFailed(req, res)
+  }
+}
+
+function loginOk(req, res) {
   res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
-  res.end('<strong>Hello World</strong>');
+  console.log("Login succesful")
+}
+
+function loginFailed(req, res) {
+  res.statusCode = 401
+  console.log("Login failed!")
 }
 
 module.exports = processLogin
