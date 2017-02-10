@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import {LoginForm} from "../";
+
+import { LoginForm } from "../";
+import { ApiService } from "./api.service";
 @Injectable()
 export class AuthService {
 
-    constructor() { }
+    constructor(private apiService: ApiService) { }
 
     login(loginData: LoginForm) {
-        console.log("Logging in with", loginData)
+        return this.apiService.post('login', loginData);
     }
 }

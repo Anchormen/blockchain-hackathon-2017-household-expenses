@@ -1,10 +1,12 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { HttpModule } from  '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Login } from '../pages/login/login';
 import { Dashboard } from '../pages/dashboard/dashboard';
 
 import { AuthService } from "../shared/services/auth.service";
+import { ApiService } from "../shared/services/api.service";
 import { AuthGuardService } from '../shared/services/auth.guard.service';
 
 @NgModule({
@@ -14,7 +16,8 @@ import { AuthGuardService } from '../shared/services/auth.guard.service';
     Login
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -25,7 +28,8 @@ import { AuthGuardService } from '../shared/services/auth.guard.service';
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
-    AuthGuardService  
+    AuthGuardService,
+    ApiService
   ]
 })
 export class AppModule {}

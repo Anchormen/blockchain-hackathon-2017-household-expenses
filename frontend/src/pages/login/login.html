@@ -13,7 +13,7 @@
 
       <ion-item>
         <ion-label floating>Emailadres</ion-label>
-        <ion-input type="email" [(ngModel)]="loginData.emailAddress" name="email" required></ion-input>
+        <ion-input type="text" [(ngModel)]="loginData.username" name="email" required></ion-input>
       </ion-item>
 
       <ion-item>
@@ -21,7 +21,7 @@
         <ion-input type="password" [(ngModel)]="loginData.password" name="password" required></ion-input>
       </ion-item>
       <ion-item>
-        <button ion-button [disabled]="!loginForm.form.valid">
+        <button full ion-button [disabled]="!loginForm.form.valid">
           Inloggen
         </button>
       </ion-item>
