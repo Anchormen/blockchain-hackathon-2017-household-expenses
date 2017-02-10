@@ -14,7 +14,7 @@ export class Dashboard {
 
   itemTapped(event, item) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.push(Page2, {
+    this.navCtrl.push(Dashboard, {
       item: item
     });
   }

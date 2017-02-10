@@ -8,5 +8,25 @@
 </ion-header>
 
 <ion-content padding>
-  
+  <form #loginForm="ngForm" (submit)="login()">
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>Emailadres</ion-label>
+        <ion-input type="email" [(ngModel)]="loginData.emailAddress" name="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Wachtwoord</ion-label>
+        <ion-input type="password" [(ngModel)]="loginData.password" name="password" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <button ion-button [disabled]="!loginForm.form.valid">
+          Inloggen
+        </button>
+      </ion-item>
+      
+
+    </ion-list>
+  </form>
 </ion-content>

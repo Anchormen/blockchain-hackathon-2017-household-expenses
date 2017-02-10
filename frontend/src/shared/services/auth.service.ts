@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-
+import {LoginForm} from "../";
 @Injectable()
 export class AuthService {
 
-constructor() { }
+    constructor() { }
 
+    login(loginData: LoginForm) {
+        console.log("Logging in with", loginData)
+    }
 }
