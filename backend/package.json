@@ -2,7 +2,7 @@
   "name": "dutch-blockchain-hackathon-project-piggybank",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "directories": {
     "example": "examples"
   },
