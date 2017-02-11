@@ -1,14 +1,17 @@
-const loginHandler = require('./login.handler')
-
+/**
+ * Main server module.
+ */
 const express = require('express');
 const app = express();
+
 const cors = require('cors')
 app.use(cors());
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-app.post('/login', loginHandler);
+const housholdRouter = require('./household/routes')
+app.use('/household', housholdRouter)
 
 var server = app.listen(8081, function () {
    var host = server.address().address
