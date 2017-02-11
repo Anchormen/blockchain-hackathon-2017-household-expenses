@@ -54,6 +54,11 @@
         <b>Total</b>
         <ion-badge outline item-right>-&euro; {{totalCreditors}}</ion-badge>
       </ion-item>
+      <ion-item *ngIf="datahHasChanged">
+          <button full ion-button (click)="confirmNewDataSettings()">
+            Save settings
+          </button>
+      </ion-item>
     </ion-list>
 
   </div>

@@ -15,6 +15,7 @@ export class Dashboard {
   totalCreditors: number = 0;
   debitors: Array<any> = null;
   totalDebitors: number = 0;
+  datahHasChanged: boolean = false;
   viewMode = 'creditors';
   balance: number;
 
@@ -50,49 +51,57 @@ export class Dashboard {
     if (this.creditors && this.creditors.length > 0) {
       this.totalCreditors = this.creditors.map((item: Creditor) => {
         return item.active ? item.amount : 0;
-      }).reduce((a,b) => a+b)
+      }).reduce((a, b) => a + b)
     }
-    if (this.debitors && this.debitors.length > 0) {      
-      this.totalDebitors = this.debitors.map((debitor: Debitor) => { 
-        return debitor.amount}).reduce((n: number, t: number) => n + t);
+    if (this.debitors && this.debitors.length > 0) {
+      this.totalDebitors = this.debitors.map((debitor: Debitor) => {
+        return debitor.amount
+      }).reduce((n: number, t: number) => n + t);
     }
   }
   creditorStatusChange($evt, creditor: Creditor) {
     creditor.active = $evt;
+    this.datahHasChanged = true;
     this.setTotals();
-    // if (debitor.active) {
-    //   this.authService.startPayingDebitor(debitor);
-    //   let alert = this.alert.create({
-    //     title: "Payments resumed",
-    //     subTitle: `Payments to ${debitor.name} have been resumed`
-    //   });
-    //   alert.present();
-    // } else {
-    //   let alert = this.alert.create({
-    //     title: "Are you sure?",
-    //     subTitle: `Are you sure you wish to stop payments to ${debitor.name}?`,
-    //     buttons: [
-    //       {
-    //         text: 'Nee',
-    //         handler: () => {
-    //           debitor.active = true;
-    //         }
-    //       },
-    //       {
-    //         text: 'Ja',
-    //         handler: () => {
-    //           this.authService.stopPayingDebitor(debitor);
-    //           let alert = this.alert.create({
-    //             title: "Payments stopped",
-    //             subTitle: `Payments to ${debitor.name} have been stopped`
-    //           });
-    //           alert.present();
-    //           this.setTotals();
-    //         }
-    //       }
-    //     ]
-    //   });
-    //   alert.present();
-    // }
+  }
+  confirmNewDataSettings() {
+    let unpaidCreditorsCount = this.creditors.filter((item: Creditor) => {
+      return !item.active
+    }).length;
+    if (unpaidCreditorsCount > 0) {
+      let alert = this.alert.create({
+        title: "Are you sure?",
+        enableBackdropDismiss: false,
+        subTitle: `Are you sure you wish to to save these settings? ${unpaidCreditorsCount} will not be paid.`,
+        buttons: [
+          {
+            text: 'Nee',
+            handler: () => {              
+            }
+          },
+          {
+            text: 'Ja',
+            handler: () => {
+              this.authService.saveSettings(this.creditors);
+              let alert = this.alert.create({
+                title: "Payments settings saved",
+                subTitle: `The payments settings have been saved`
+              });
+              alert.present();
+              this.setTotals();
+            }
+          }
+        ]
+      });
+      alert.present();
+    } else {
+      this.authService.saveSettings(this.creditors);
+      let alert = this.alert.create({
+        title: "Payment settings saved",
+        subTitle: `The payments settings have been saved`
+      });
+      alert.present();
+
+    }
   }
 }

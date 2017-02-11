@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ApiService {
-    apiBase: string = 'http://10.20.101.127:8081/';    
+    apiBase: string = 'http://10.20.102.16:8081/';    
     constructor(private http: AuthHttp) { }
 
     getData(url: string) {
@@ -15,8 +15,7 @@ export class ApiService {
         return this.http.get(url)
             .map(res => res.json());
     }
-    postData(url, data) {
-        debugger;
+    postData(url, data) {        
         url = this.apiBase + url;
         console.log("posting to", url)
         return this.http.post(url, data);

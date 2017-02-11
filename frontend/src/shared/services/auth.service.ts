@@ -15,7 +15,7 @@ import 'rxjs/add/operator/map';
 export class AuthService {
     authStatus: Subject<boolean> = new Subject<boolean>();
     authStatusChanged$ = this.authStatus.asObservable();
-    private apiBase: string = 'http://10.20.101.127:8081/';
+    private apiBase: string = 'http://10.20.102.16:8081/';
 
     constructor(private apiService: ApiService, public storage: Storage, public http: Http) { }
 
@@ -23,22 +23,28 @@ export class AuthService {
         let request = this.http.post(this.apiBase + 'user/login', loginData)
             .map(res => res.json());
 
-        request.subscribe(res => {            
+        request.subscribe(res => {
             console.log("Saving data from res", res)
-            this.authStatus.next(res.login);            
+            this.authStatus.next(res.login);
             this.storage.set("id_token", res.token);
         });
         return request;
 
     }
     logout() {
-        localStorage.removeItem("token")
+        this.storage.remove("id_token")
     }
     getLoginStatus() {
-        return localStorage.getItem("token");
+        return this.storage.get("id_token") ? true : false;
     }
     getAccountdata() {
-        let request$ = this.apiService.getData('household/account/123');
+        let request$ = this.apiService.postData('creditor/send_transaction', {
+            creditorAddress: "1",
+            creditorName: "John",
+            amount: 123,
+            householdId: 123
+        });
+        //let request$ = this.apiService.getData('household/account/123');
         return request$;
     }
     getDebitors() {
@@ -62,10 +68,15 @@ export class AuthService {
             debitor: creditor.name
         });
     }
-    startPayingCreditor(creditor: Creditor) {
-        return this.apiService.postData('startDebitorPayments', {
-            creditor: creditor.name
+    saveSettings(creditors: Array<Creditor>) {
+        let saveData = [];
+        creditors.forEach((c: Creditor) => {
+            saveData.push({
+                creditor: c.name,
+                active: c.active
+            });
         });
+        return this.apiService.postData('household/savepayments', saveData);
     }
     get fauxCreditors() {
         return [
