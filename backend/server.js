@@ -13,8 +13,7 @@ app.use(bodyParser.json())
 const housholdRouter = require('./household/routes')
 app.use('/household', housholdRouter)
 app.get('/', (req, res) => {
-  res.statusCode = 204;
-  res.end()
+  res.status(204).end()
 });
 
 var server = app.listen(8081, function () {
