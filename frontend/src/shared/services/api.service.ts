@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {  Response } from '@angular/http';
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -8,7 +9,7 @@ import 'rxjs/add/operator/toPromise';
 export class ApiService {
     // private apiBase: string = 'http://10.20.101.127:8081/';
     private apiBase: string = 'http://localhost:8081/';
-    constructor(private http: Http) { }
+    constructor(private http: AuthHttp) { }
 
     get(url: string) {
         url = this.apiBase + url;

@@ -3,33 +3,59 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Dashboard</ion-title>
+    <ion-title>Financial overview</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content  padding>
-  <ion-card *ngIf="accountData != null">
-    <ion-card-header>
-      Hi {{accountData.first_name}} {{accountData.last_name}}, dit zijn uw crediteuren
-    </ion-card-header>
-    <ion-list>
-      <ion-item>
-        <ion-label> KPN</ion-label>
-        <ion-toggle checked="true"></ion-toggle>
+<ion-content>
+  <div padding>
+    Hi {{accountData?.first_name}} {{accountData?.last_name}},<br> 
+    here's an overview of you financial flow. <br>
+    <span [ngClass]="{'balance-positive': (totalDebitors - totalCreditors) >= 0,
+      'balance-negative': (totalDebitors - totalCreditors) < 0}">
+      <ion-icon name="alert" *ngIf="(totalDebitors - totalCreditors) < 0"></ion-icon>
+      Your current balance is &euro; {{totalDebitors - totalCreditors}}
+    </span>
+  </div>
+  <div padding>
+    <ion-segment [(ngModel)]="viewMode">
+      <ion-segment-button value="creditors">
+        Creditors
+      </ion-segment-button>
+      <ion-segment-button value="debitors">
+        Debitors
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <div [ngSwitch]="viewMode">
+
+    <ion-list *ngSwitchCase="'debitors'">
+      <ion-item *ngFor="let debitor of debitors">
+        <ion-label [innerText]='debitor.name'> </ion-label>        
+
+        
+          <ion-badge outline item-right>&euro; {{debitor.amount}}</ion-badge>
       </ion-item>
       <ion-item>
-        <ion-label>Eneco</ion-label>
-        <ion-toggle checked="false"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label> Woningbouwvereniging</ion-label>
-        <ion-toggle checked="true"></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label> Waterbedrijf</ion-label>
-        <ion-toggle checked="true"></ion-toggle>
+        <b>Total</b>
+        <ion-badge outline item-right>&euro; {{totalDebitors}}</ion-badge>
       </ion-item>
     </ion-list>
-  </ion-card>
+
+    <ion-list *ngSwitchCase="'creditors'">
+      <ion-item *ngFor="let creditor of creditors">
+        <ion-label [innerText]='creditor.name'> </ion-label>
+        <ion-toggle (ngModelChange)="creditorStatusChange($event, creditor)" 
+          [(ngModel)]="creditor.active"
+          (checked)="creditor.active"></ion-toggle>
+        <ion-badge item-right>&euro; {{creditor.amount}}</ion-badge>
+      </ion-item>
+      <ion-item>
+        <b>Total</b>
+        <ion-badge outline item-right>-&euro; {{totalCreditors}}</ion-badge>
+      </ion-item>
+    </ion-list>
+
+  </div>
 
 </ion-content>

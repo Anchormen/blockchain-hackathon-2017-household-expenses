@@ -1,5 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { HttpModule } from  '@angular/http';
+import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { MyApp } from './app.component';
@@ -9,6 +9,20 @@ import { Dashboard } from '../pages/dashboard/dashboard';
 import { AuthService } from "../shared/services/auth.service";
 import { ApiService } from "../shared/services/api.service";
 import { AuthGuardService } from '../shared/services/auth.guard.service';
+
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { Http } from '@angular/http';
+
+let storage = new Storage();
+
+export function getAuthHttp(http) {
+  return new AuthHttp(new AuthConfig({
+    headerPrefix: 'asdasd',
+    noJwtError: true,
+    globalHeaders: [{'Accept': 'application/json'}],
+    tokenGetter: (() => storage.get('id_token')),
+  }), http);
+}
 
 @NgModule({
   declarations: [
@@ -27,11 +41,18 @@ import { AuthGuardService } from '../shared/services/auth.guard.service';
     Dashboard
   ],
   providers: [
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { 
+      provide: ErrorHandler, 
+      useClass: IonicErrorHandler 
+    },
+    {
+      provide: ApiService,
+      useFactory: getAuthHttp,
+      deps: [Http]
+    },
     AuthService,
     AuthGuardService,
-    ApiService,
     Storage
   ]
 })
-export class AppModule {}
+export class AppModule { }

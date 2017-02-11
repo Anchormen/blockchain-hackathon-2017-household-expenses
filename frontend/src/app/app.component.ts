@@ -4,7 +4,8 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { Dashboard } from '../pages/dashboard/dashboard';
 import { Login } from '../pages/login/login';
-
+import { LogoutPage } from '../pages/logout/logout';
+import { AuthService } from "../shared/services/auth.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -15,30 +16,31 @@ export class MyApp {
   rootPage: any = Login;
 
   pages: Array<{title: string, component: any}>;
-
-  constructor(public platform: Platform) {
+  isLoggedIn: boolean = false;
+  constructor(public platform: Platform, public authService: AuthService) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Login', component: Login },
-      { title: 'Dashboard', component: Dashboard }
+    this.pages = [      
+      { title: 'Login', component: Login},
+      { title: 'Dashboard', component: Dashboard },
+      { title: 'Logout',  component: LogoutPage }
     ];
 
   }
 
+
+
   initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+    this.platform.ready().then(() => {      
       StatusBar.styleDefault();
       Splashscreen.hide();
+      this.authService.authStatus.subscribe((isLoggedIn : boolean) => {
+        this.isLoggedIn = isLoggedIn;
+      })
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
+  openPage(page) {    
     this.nav.setRoot(page.component);
   }
 }

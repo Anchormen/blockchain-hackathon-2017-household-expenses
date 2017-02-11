@@ -1,5 +1,5 @@
 export class Debitor {
-    constructor(public name : string, public active: boolean) {
+    constructor(public name : string, public amount: number) {
 
     }
 }
