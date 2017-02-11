@@ -6,7 +6,9 @@ var name = "test_contract";
 contract = getContract(name);
 
 function getBalance(){
-    return contract.getBalance.call();
+    return contract.getBalance.call()['c'][0];
 }
 
-module.exports = getBalance;
+module.exports = {
+    getBalance: getBalance
+};
