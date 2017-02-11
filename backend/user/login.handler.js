@@ -31,7 +31,7 @@ LoginHandler.hashPassword = (password) => {
 LoginHandler.loginOk = (req, res) => {
   console.log("Login succesful")
   var jwtToken = LoginHandler.createJwtToken(req.body.username);
-  res.status(200).json({ "login": true, "jwtToken": jwtToken})
+  res.status(200).json({ "login": true, "token": jwtToken})
 }
 
 LoginHandler.loginFailed = (req, res) => {
