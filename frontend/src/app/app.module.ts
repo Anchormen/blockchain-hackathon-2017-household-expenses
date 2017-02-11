@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from  '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { Login } from '../pages/login/login';
 import { Dashboard } from '../pages/dashboard/dashboard';
@@ -29,7 +30,8 @@ import { AuthGuardService } from '../shared/services/auth.guard.service';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     AuthGuardService,
-    ApiService
+    ApiService,
+    Storage
   ]
 })
 export class AppModule {}

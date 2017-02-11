@@ -18,6 +18,4 @@ export class ApiService {
         url = this.apiBase + url;
         return this.http.post(url, data);
     }
-
-
 }
