@@ -23,16 +23,11 @@ app.get('/', (req, res) => {
   res.status(204).end()
 });
 
-// Setup models
-const User = require("./user/model")
-User.sync({force: true})
-
 var server = app.listen(8081, function () {
    var host = server.address().address;
    var port = server.address().port;
    console.log("Example app listening at http://%s:%s", host, port)
 });
-
 
 exports.closeServer = function(){
     server.close();
