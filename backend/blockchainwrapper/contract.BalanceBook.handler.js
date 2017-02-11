@@ -14,8 +14,8 @@ function removeHouseHold(household, coach){
     contract.removeHouseHold(household, {from: coach}) ;
 }
 
-function addPayment(household, company, encrypted_change, active, coach) {
-    contract.addPayment(household, company, encrypted_change, active, {from: coach})
+function addPayment(household, company, encrypted_change, coach) {
+    contract.addPayment(household, company, encrypted_change, true, {from: coach})
 }
 
 function togglePayment(household, company, coach) {
@@ -25,13 +25,17 @@ function togglePayment(household, company, coach) {
 function getPayment(household, company) {
     
     res = contract.getPayments.call(household, company);
-    payment = res[0]['c'][0];
-    active = res[1];
-    return [payment, active];
+    payment = {
+        'amount': res[0]['c'][0],
+        'active': res[1]
+    }
+    return payment;
 }
 
 function getPublicKeys(household) {
-    return contract.getPublicKeys.call(household) ;
+    res = contract.getPublicKeys.call(household);
+    keys = {'n': r[0], 'g':r[1]}
+    return keys
 }
 
 
