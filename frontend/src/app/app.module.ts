@@ -16,10 +16,8 @@ import { Http } from '@angular/http';
 let storage = new Storage();
 
 export function getAuthHttp(http) {
-  return new AuthHttp(new AuthConfig({
-    headerPrefix: 'asdasd',
-    noJwtError: true,
-    globalHeaders: [{'Accept': 'application/json'}],
+  return new AuthHttp(new AuthConfig({    
+    noJwtError: true,    
     tokenGetter: (() => storage.get('id_token')),
   }), http);
 }
@@ -46,10 +44,11 @@ export function getAuthHttp(http) {
       useClass: IonicErrorHandler 
     },
     {
-      provide: ApiService,
+      provide: AuthHttp,
       useFactory: getAuthHttp,
       deps: [Http]
     },
+    ApiService,
     AuthService,
     AuthGuardService,
     Storage

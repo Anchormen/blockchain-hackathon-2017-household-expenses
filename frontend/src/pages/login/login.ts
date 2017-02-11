@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage } from "@ionic/storage"
 import { LoginForm, AuthService } from '../../shared/';
 import { NavController, AlertController } from 'ionic-angular';
 import { Dashboard } from "../dashboard/dashboard";
@@ -10,8 +11,10 @@ import { Dashboard } from "../dashboard/dashboard";
 export class Login {
   loginData = new LoginForm('', '');
   constructor(public navCtrl: NavController, public alertController: AlertController,
-    public authService: AuthService) {
-
+    public authService: AuthService, public storage: Storage) {
+    // if(this.storage.getItem("id-token")) {
+    //   this.navCtrl.setRoot(Dashboard)
+    // }
   }
   
   login() {

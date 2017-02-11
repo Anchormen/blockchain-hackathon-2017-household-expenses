@@ -7,17 +7,18 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ApiService {
-    private apiBase: string = 'http://10.20.101.127:8081/';
-    //private apiBase: string = 'http://localhost:8081/';
+    apiBase: string = 'http://10.20.101.127:8081/';    
     constructor(private http: AuthHttp) { }
 
-    get(url: string) {
+    getData(url: string) {
         url = this.apiBase + url;
         return this.http.get(url)
             .map(res => res.json());
     }
-    post(url, data) {
+    postData(url, data) {
+        debugger;
         url = this.apiBase + url;
+        console.log("posting to", url)
         return this.http.post(url, data);
     }
 }

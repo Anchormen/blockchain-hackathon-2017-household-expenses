@@ -28,6 +28,11 @@ export class Dashboard {
     })
   }
   ionViewWillEnter() {
+    this.authService.getHousehouldData().subscribe(res => {
+      console.log("householddata", res);
+    }, err => {
+      console.error("got error", err);
+    })
     this.authService.getCreditors().subscribe((res: Array<any>) => {
       this.creditors = res;
       this.setTotals();
