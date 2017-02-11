@@ -1,6 +1,6 @@
 
 var mainRef = require("../server.js");
-var TestContract = require('../blockchainwrapper/contract.test.handler');
+var TestContract = require('../blockchainwrapper/contract.BalanceBook.handler.js');
 
 describe("BlockChainWrapperTests", function(){
     describe("TestContractUserBalanceIs20", function() {
