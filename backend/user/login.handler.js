@@ -21,7 +21,7 @@ function loginFailed(req, res) {
 }
 
 function createJwtToken(username){
-	var token = jwtHandler.sign({ data: username }, jwtSecretKey.secret, { expiresIn: 60 * 1 });
+	var token = jwtHandler.sign({ data: username }, jwtSecretKey.secret, { expiresIn: 60 * 10 });
 	return token;
 }
 

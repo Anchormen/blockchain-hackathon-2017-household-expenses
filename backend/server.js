@@ -10,11 +10,14 @@ app.use(cors());
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
 
-const housholdRouter = require('./household/routes')
-app.use('/household', housholdRouter)
-
 const loginHandler = require('./user/routes')
 app.use('/user', loginHandler)
+
+const tokenHandler = require('./user/token.verifier')
+app.use('/', tokenHandler)
+
+const housholdRouter = require('./household/routes')
+app.use('/household', housholdRouter)
 
 app.get('/', (req, res) => {
   res.status(204).end()
