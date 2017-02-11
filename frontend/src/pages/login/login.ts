@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Storage } from "@ionic/storage"
+import { Storage } from "@ionic/storage";
 import { LoginForm, AuthService } from '../../shared/';
 import { NavController, AlertController } from 'ionic-angular';
 import { Dashboard } from "../dashboard/dashboard";
