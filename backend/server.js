@@ -12,6 +12,10 @@ app.use(bodyParser.json())
 
 const housholdRouter = require('./household/routes')
 app.use('/household', housholdRouter)
+app.get('/', (req, res) => {
+  res.statusCode = 204;
+  res.end()
+});
 
 var server = app.listen(8081, function () {
    var host = server.address().address

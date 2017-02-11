@@ -8,7 +8,7 @@ class AccountHandler {
       "last_name": "ElSioufy",
       "id": req.params['id']
     }
-    res.end(JSON.stringify(testAccount))
+    res.send(testAccount)
   }
 }
 
