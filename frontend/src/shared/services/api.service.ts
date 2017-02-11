@@ -6,7 +6,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ApiService {
-    private apiBase: string = 'http://10.20.101.127:8081/';
+    // private apiBase: string = 'http://10.20.101.127:8081/';
+    private apiBase: string = 'http://localhost:8081/';
     constructor(private http: Http) { }
 
     get(url: string) {
