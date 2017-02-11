@@ -17,6 +17,14 @@ let User = db.define('user', {
   lastName: {
     type: Sequelize.STRING,
     field: 'last_name'
+  },
+  publicKey: {
+    type: Sequelize.STRING,
+    field: 'public_key'
+  },
+  privateKey: {
+    type: Sequelize.STRING,
+    field: 'private_key'
   }
 }, {
   freezeTableName: true // Model tableName will be the same as the model name

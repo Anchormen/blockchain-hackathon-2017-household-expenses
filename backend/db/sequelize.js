@@ -1,4 +1,4 @@
-var Sequelize = require("sequelize")
+const Sequelize = require("sequelize")
 
 let sequelize = new Sequelize('dbh2017', 'username', 'password', {
   host: 'localhost',

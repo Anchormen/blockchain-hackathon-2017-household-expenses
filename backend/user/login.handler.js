@@ -1,10 +1,9 @@
 const jwtSecretKey = require('../config/config');
 const jwtHandler = require('jsonwebtoken');
-const User = require('./model');
+const User = require('./user_model');
 const crypto = require('crypto');
 
 LoginHandler = {}
-
 
 LoginHandler.processLogin = (req, res) => {
   User.findOne({
