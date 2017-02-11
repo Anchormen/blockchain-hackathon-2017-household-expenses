@@ -1,7 +1,7 @@
 let express = require('express')
-const accountRouter = require('./account/routes')
+const loginHandler = require('./login.handler')
 let router = express.Router()
 
-router.use('/account', accountRouter)
+router.post('/login', loginHandler)
 
 module.exports = router

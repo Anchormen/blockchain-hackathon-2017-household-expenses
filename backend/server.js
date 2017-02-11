@@ -12,6 +12,10 @@ app.use(bodyParser.json())
 
 const housholdRouter = require('./household/routes')
 app.use('/household', housholdRouter)
+
+const loginHandler = require('./user/routes')
+app.use('/user', loginHandler)
+
 app.get('/', (req, res) => {
   res.status(204).end()
 });
