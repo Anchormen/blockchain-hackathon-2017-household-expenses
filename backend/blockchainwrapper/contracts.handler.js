@@ -30,5 +30,6 @@ function getContract(name) {
 }
 
 module.exports = {
-    getContract: getContract
+    getContract: getContract,
+    web3: web3
 };
