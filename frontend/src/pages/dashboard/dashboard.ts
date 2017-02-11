@@ -8,6 +8,7 @@ import { AuthService } from '../../shared/services/auth.service';
 })
 export class Dashboard {
   accountData: any = null;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public authService: AuthService) {
     this.authService.getAccountdata().subscribe(res => {
@@ -16,7 +17,9 @@ export class Dashboard {
       console.error('couldnt get household data');
     })
   }
-
+  ionOnInit() {
+    console.log("init?")
+  }
   itemTapped(event, item) {
     // That's right, we're pushing to ourselves!
     this.navCtrl.push(Dashboard, {
