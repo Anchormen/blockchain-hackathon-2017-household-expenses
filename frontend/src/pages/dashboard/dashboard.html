@@ -7,6 +7,29 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  
+<ion-content  padding>
+  <ion-card *ngIf="accountData != null">
+    <ion-card-header>
+      Hi {{accountData.first_name}} {{accountData.last_name}}, dit zijn uw crediteuren
+    </ion-card-header>
+    <ion-list>
+      <ion-item>
+        <ion-label> KPN</ion-label>
+        <ion-toggle checked="true"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Eneco</ion-label>
+        <ion-toggle checked="false"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label> Woningbouwvereniging</ion-label>
+        <ion-toggle checked="true"></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label> Waterbedrijf</ion-label>
+        <ion-toggle checked="true"></ion-toggle>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
 </ion-content>

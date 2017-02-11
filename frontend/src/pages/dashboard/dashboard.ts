@@ -7,11 +7,11 @@ import { AuthService } from '../../shared/services/auth.service';
   templateUrl: 'dashboard.html'
 })
 export class Dashboard {
-
+  accountData: any = null;
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public authService: AuthService) {
     this.authService.getAccountdata().subscribe(res => {
-      console.log("get household data", res)
+      this.accountData = res;
     }, err => {
       console.error('couldnt get household data');
     })
