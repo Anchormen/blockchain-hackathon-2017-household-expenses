@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 });
 
 // Setup models
-const User = require("./user/models")
+const User = require("./user/model")
 User.sync({force: true})
 
 var server = app.listen(8081, function () {
@@ -32,3 +32,8 @@ var server = app.listen(8081, function () {
    var port = server.address().port;
    console.log("Example app listening at http://%s:%s", host, port)
 });
+
+
+exports.closeServer = function(){
+    server.close();
+};
