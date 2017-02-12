@@ -4,23 +4,37 @@ var express = require('express');
 let router = express.Router();
 
 router.use(function (req, res, next){
-	     // console.log(req.headers);
-       var token = req.headers["authorization"].replace('Bearer ', '');
+
        console.log("Verifying token");
-       console.log(token);
-        if (token){
-            jwtHandler.verify(token, jwtSecretKey.secret, function(err, decoded){
-              if (err){
-               console.log("Authorization NOK");
-                res.status(401).json({ "login": false, "message": "Invalid token"});
-              } else {
-	              // res.status(200).json({ "login": true});
-	             console.log("Authorization OK");
-	              req.decoded = decoded;
-	              next();
-							}
-					});
+
+       let authorizationHeader = req.headers["authorization"];
+       console.log(authorizationHeader);
+
+        if (authorizationHeader){
+        	console.log("I found an authorization header");
+
+        	let token = authorizationHeader.replace('Bearer ', '');
+
+        	if (token){
+        		console.log("I fount a token");
+
+	            jwtHandler.verify(token, jwtSecretKey.secret, function(err, decoded){
+	              if (err){
+	               console.log("Authorization NOK");
+	                res.status(401).json({ "login": false, "message": "Invalid token"});
+	              } else {
+		              // res.status(200).json({ "login": true});
+		             console.log("Authorization OK");
+		              req.decoded = decoded;
+		              next();
+								}
+						});
+	    }else{
+	    	console.log("I could not find a token");
+			return res.status(403).json({"login": false, "message": "No token provided"});
+	    }
 	} else {
+		console.log("I could not find an authorization header");
 		return res.status(403).json({"login": false, "message": "No token provided"});
 	};
 });

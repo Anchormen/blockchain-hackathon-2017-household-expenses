@@ -19,6 +19,9 @@ app.use('/', tokenHandler)
 const housholdRouter = require('./household/routes')
 app.use('/household', housholdRouter)
 
+const creditordRouter = require('./creditor/routes')
+app.use('/creditor', creditordRouter)
+
 app.get('/', (req, res) => {
   res.status(204).end()
 });
