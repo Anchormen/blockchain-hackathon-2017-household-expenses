@@ -15,7 +15,7 @@ import 'rxjs/add/operator/map';
 export class AuthService {
     authStatus: Subject<boolean> = new Subject<boolean>();
     authStatusChanged$ = this.authStatus.asObservable();
-    private apiBase: string = 'http://10.20.102.16:8081/';
+    private apiBase: string = 'http://127.0.0.1:8081/';
 
     constructor(private apiService: ApiService, public storage: Storage, 
         public http: Http) { }
@@ -63,7 +63,9 @@ export class AuthService {
         return observable$;
     }
     getHousehouldData() {
-        let request = this.apiService.getData('household/account/1');
+        let request = this.apiService.postData('household/account/1', {
+
+        });
         return request;
     }
     getCreditors() {
@@ -78,14 +80,14 @@ export class AuthService {
         });
     }
     saveSettings(creditors: Array<Creditor>) {
-        let saveData = [];
+        let saveData = { companies: [], householdId: 1};
         creditors.forEach((c: Creditor) => {
-            saveData.push({
+            saveData.companies.push({
                 creditor: c.name,
                 active: c.active
             });
         });
-        return this.apiService.postData('household/savepayments', saveData);
+        return this.apiService.postData('household/account/1', saveData);
     }
     get fauxCreditors() {
         return [

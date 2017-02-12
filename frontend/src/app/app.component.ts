@@ -57,8 +57,7 @@ export class MyApp {
           text: "Yes",
           handler: () => {
             this.authService.logout();
-            this.nav.setRoot(Login);            
-            debugger;
+            this.nav.setRoot(Login);  
           }
         }
       ]

@@ -45,11 +45,11 @@ export class Dashboard {
     // })
   }
   ionViewWillEnter() {
-    this.authService.getHousehouldData().subscribe(res => {
-      console.log("householddata", res);
-    }, err => {
-      console.error("got error", err);
-    })
+    // this.authService.getHousehouldData().subscribe(res => {
+    //   console.log("householddata", res);
+    // }, err => {
+    //   console.error("got error", err);
+    // })
     this.authService.getCreditors().subscribe((res: Array<any>) => {
       this.creditors = res;
       this.setTotals();
@@ -88,7 +88,7 @@ export class Dashboard {
       let alert = this.alert.create({
         title: "Are you sure?",
         enableBackdropDismiss: false,
-        subTitle: `Are you sure you wish to to save these settings? ${unpaidCreditorsCount} will not be paid.`,
+        subTitle: `Are you sure you wish to to save these settings? ${unpaidCreditorsCount} creditor will not be paid.`,
         buttons: [
           {
             text: 'No, cancel',

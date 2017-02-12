@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Inloggen</ion-title>
+    <ion-title>Log in</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -17,12 +17,12 @@
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Wachtwoord</ion-label>
+        <ion-label floating>Password</ion-label>
         <ion-input type="password" [(ngModel)]="loginData.password" name="password" required></ion-input>
       </ion-item>
       <ion-item>
         <button full ion-button [disabled]="!loginForm.form.valid">
-          Inloggen
+          Log in
         </button>
       </ion-item>
       
