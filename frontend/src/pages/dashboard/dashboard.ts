@@ -38,11 +38,11 @@ export class Dashboard {
 
 
     this.balance = 0;
-    this.authService.getAccountdata().subscribe(res => {
-      this.accountData = res;
-    }, err => {
-      console.error('couldnt get household data');
-    })
+    // this.authService.getAccountdata().subscribe(res => {
+    //   this.accountData = res;
+    // }, err => {
+    //   console.error('couldnt get household data');
+    // })
   }
   ionViewWillEnter() {
     this.authService.getHousehouldData().subscribe(res => {
