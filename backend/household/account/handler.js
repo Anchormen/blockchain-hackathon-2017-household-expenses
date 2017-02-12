@@ -8,6 +8,9 @@ function getPayment(req, res){
 
 	let payments = [];
 
+	console.log(companies);
+	console.log(householdId);
+
 	companies.forEach(function(comp){
 		console.log("Getting payment for company"+comp.creditor);
 		let payment = balanceContractHandler.getPayment(householdId, comp.creditor);

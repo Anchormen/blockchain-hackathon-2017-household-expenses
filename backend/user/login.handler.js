@@ -38,7 +38,7 @@ LoginHandler.loginFailed = (req, res) => {
 }
 
 LoginHandler.createJwtToken = (username) => {
-  var token = jwtHandler.sign({ data: username }, jwtSecretKey.secret, { expiresIn: 60 * 10 });
+  var token = jwtHandler.sign({ data: username }, jwtSecretKey.secret, { expiresIn: 60 * 60 });
   return token;
 }
 
