@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 
 import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
+import { tokenNotExpired, JwtHelper } from "angular2-jwt";
+
+import { Login } from "../login/login";
+
 import { AuthService } from '../../shared/services/auth.service';
 import { Debitor } from "../../shared/models/debitor";
 import { Creditor } from "../../shared/models/creditor";
@@ -20,7 +26,17 @@ export class Dashboard {
   balance: number;
 
   constructor(public navCtrl: NavController, public alert: AlertController,
-    public navParams: NavParams, public authService: AuthService) {
+    public navParams: NavParams, public authService: AuthService, 
+    public storage: Storage) {
+    this.storage.get("id_token").then(res => {
+      if (!res) {
+        this.navCtrl.setRoot(Login);
+      } else {
+        
+      }
+    })
+
+
     this.balance = 0;
     this.authService.getAccountdata().subscribe(res => {
       this.accountData = res;
@@ -75,14 +91,16 @@ export class Dashboard {
         subTitle: `Are you sure you wish to to save these settings? ${unpaidCreditorsCount} will not be paid.`,
         buttons: [
           {
-            text: 'Nee',
-            handler: () => {              
+            text: 'No, cancel',
+            handler: () => {
             }
           },
           {
-            text: 'Ja',
+            text: 'Yes',
             handler: () => {
-              this.authService.saveSettings(this.creditors);
+              this.authService.saveSettings(this.creditors).subscribe(res => {
+
+              })
               let alert = this.alert.create({
                 title: "Payments settings saved",
                 subTitle: `The payments settings have been saved`
@@ -95,7 +113,9 @@ export class Dashboard {
       });
       alert.present();
     } else {
-      this.authService.saveSettings(this.creditors);
+      this.authService.saveSettings(this.creditors).subscribe(res => {
+
+      });
       let alert = this.alert.create({
         title: "Payment settings saved",
         subTitle: `The payments settings have been saved`

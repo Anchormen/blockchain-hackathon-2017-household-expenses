@@ -13,14 +13,17 @@ import { AuthGuardService } from '../shared/services/auth.guard.service';
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { Http } from '@angular/http';
 
-let storage = new Storage();
+//let storage = new Storage();
 
-export function getAuthHttp(http) {
-  return new AuthHttp(new AuthConfig({    
-    noJwtError: true,    
-    tokenGetter: (() => storage.get('id_token')),
-  }), http);
-}
+// export function getAuthHttp(http) {
+//   return new AuthHttp(new AuthConfig({
+//     //noTokenScheme: true,
+//     //tokenGetter: (() => {
+//       //return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiam9obiIsImlhdCI6MTQ4Njg1OTAwNSwiZXhwIjoxNDg2ODU5NjA1fQ.dcsKTVVve07_nCtzTeRAnJeFWJa5daHfoNK-GcPzpnE";
+//       //return storage.get('id_token')
+//     //}),
+//   }), http);
+// }
 
 @NgModule({
   declarations: [
@@ -39,14 +42,9 @@ export function getAuthHttp(http) {
     Dashboard
   ],
   providers: [
-    { 
-      provide: ErrorHandler, 
-      useClass: IonicErrorHandler 
-    },
     {
-      provide: AuthHttp,
-      useFactory: getAuthHttp,
-      deps: [Http]
+      provide: ErrorHandler,
+      useClass: IonicErrorHandler
     },
     ApiService,
     AuthService,

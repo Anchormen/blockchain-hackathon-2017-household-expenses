@@ -12,9 +12,13 @@ export class Login {
   loginData = new LoginForm('', '');
   constructor(public navCtrl: NavController, public alertController: AlertController,
     public authService: AuthService, public storage: Storage) {
-    if(this.storage.get("id_token")) {
-      this.navCtrl.setRoot(Dashboard)
-    }
+    this.storage.get("id_token").then(res => {
+      if(res) {
+        this.navCtrl.setRoot(Dashboard);
+      }
+    });
+      
+    
   }
   
   login() {

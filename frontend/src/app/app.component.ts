@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { Dashboard } from '../pages/dashboard/dashboard';
@@ -17,13 +17,16 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
   isLoggedIn: boolean = false;
-  constructor(public platform: Platform, public authService: AuthService) {
+  
+  constructor(public platform: Platform, public authService: AuthService,
+    public alert: AlertController) {
     this.initializeApp();
-
+    this.authService.getLoginStatus().then(res => {
+      this.isLoggedIn = res !== null;
+    })
     this.pages = [      
       { title: 'Login', component: Login},
-      { title: 'Dashboard', component: Dashboard },
-      { title: 'Logout',  component: LogoutPage }
+      { title: 'Dashboard', component: Dashboard }      
     ];
 
   }
@@ -34,13 +37,32 @@ export class MyApp {
     this.platform.ready().then(() => {      
       StatusBar.styleDefault();
       Splashscreen.hide();
-      this.authService.authStatus.subscribe((isLoggedIn : boolean) => {
-        this.isLoggedIn = isLoggedIn;
+      this.authService.authStatus.subscribe(res => {
+        this.isLoggedIn = res;
       })
     });
   }
-
-  openPage(page) {    
-    this.nav.setRoot(page.component);
+  openDashboardPage() {
+    this.nav.setRoot(Dashboard);
+  }
+  logout() {
+    let alert = this.alert.create({
+      title: "Log off",
+      message: "Are you sure you want to log off?",
+      buttons : [
+        {
+          text: "No"
+        },
+        {
+          text: "Yes",
+          handler: () => {
+            this.authService.logout();
+            this.nav.setRoot(Login);            
+            debugger;
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 }

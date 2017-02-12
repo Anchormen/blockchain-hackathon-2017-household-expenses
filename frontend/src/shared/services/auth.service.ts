@@ -17,7 +17,8 @@ export class AuthService {
     authStatusChanged$ = this.authStatus.asObservable();
     private apiBase: string = 'http://10.20.102.16:8081/';
 
-    constructor(private apiService: ApiService, public storage: Storage, public http: Http) { }
+    constructor(private apiService: ApiService, public storage: Storage, 
+        public http: Http) { }
 
     login(loginData: LoginForm) {
         let request = this.http.post(this.apiBase + 'user/login', loginData)
@@ -27,15 +28,23 @@ export class AuthService {
             console.log("Saving data from res", res)
             this.authStatus.next(res.login);
             this.storage.set("id_token", res.token);
+            localStorage.setItem("id_token", res.token);
         });
         return request;
 
     }
     logout() {
-        this.storage.remove("id_token")
+        this.storage.remove("id_token").then(res =>{
+            console.log("removal resulted in", res);
+        })
+        localStorage.removeItem("id_token");
     }
     getLoginStatus() {
-        return this.storage.get("id_token") ? true : false;
+        return new Promise((resolve, reject) => {
+            this.storage.get("id_token").then(res => {                
+                resolve(res != undefined);
+            })
+        }) 
     }
     getAccountdata() {
         let request$ = this.apiService.postData('creditor/send_transaction', {
@@ -54,7 +63,7 @@ export class AuthService {
         return observable$;
     }
     getHousehouldData() {
-        let request = this.apiService.getData('household/1');
+        let request = this.apiService.getData('household/account/1');
         return request;
     }
     getCreditors() {
@@ -85,7 +94,7 @@ export class AuthService {
             new Creditor("Eneco", false, 89),
             new Creditor("Private lease Co", false, 339),
             new Creditor("Waterbedrijf", true, 13),
-        ]
+        ];
     }
     get fauxDebitors() {
         return [
@@ -93,7 +102,7 @@ export class AuthService {
             new Debitor("Gemeente", 240),
             new Debitor("Belastingdienst", 110),
             new Debitor("Toeslagen", 90),
-        ]
+        ];
     }
 }
 
